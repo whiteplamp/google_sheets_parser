@@ -250,7 +250,7 @@ def day_open_doors_migration(table):
                            )
 
     metadata.create_all(engine)
-    sql = text('DELETE FROM bitrix24-ДОД')
+    sql = text('DELETE FROM "bitrix24-ДОД"')
     engine.execute(sql)
     i = 0
     data = []
@@ -313,7 +313,7 @@ def start_lesson_migration(table):
                          )
 
     metadata.create_all(engine)
-    sql = text('DELETE FROM bitrix24-ПЗ')
+    sql = text('DELETE FROM "bitrix24-ПЗ"')
     engine.execute(sql)
     i = 0
     data = []
@@ -378,7 +378,7 @@ def lm_migration(table):
                )
 
     metadata.create_all(engine)
-    sql = text('DELETE FROM bitrix24-ЛМ')
+    sql = text('DELETE FROM "bitrix24-ЛМ"')
     engine.execute(sql)
     i = 0
     data = []
@@ -492,7 +492,7 @@ def vkontakte_migration(table):
                       )
 
     metadata.create_all(engine)
-    sql = text('DELETE FROM VKontakte-Расходы_вчера')
+    sql = text('DELETE FROM "VKontakte-Расходы_вчера"')
     engine.execute(sql)
     data = []
     i = 0
@@ -550,7 +550,7 @@ def adwords_migration(table):
                     )
 
     metadata.create_all(engine)
-    sql = text('DELETE FROM Adwords-Расходы_Вчера')
+    sql = text('DELETE FROM "Adwords-Расходы_Вчера"')
     engine.execute(sql)
     data = []
     i = 0
@@ -617,7 +617,7 @@ def facebook_migration(table):
                      )
 
     metadata.create_all(engine)
-    sql = text('DELETE FROM facebook-Расходы_Вчера')
+    sql = text('DELETE FROM "facebook-Расходы_Вчера"')
     engine.execute(sql)
     data = []
     i = 0
