@@ -259,26 +259,33 @@ def day_open_doors_migration(table):
             for j in range(len(row)):
                 if not row[j]:
                     row[j] = None
-                data.append({
-                    "ID сделки": row[0],
-                    "Название сделки": row[1],
-                    "Код статуса": row[2],
-                    "Статус": row[3],
-                    "Контакт номер": row[4],
-                    "Source": row[5],
-                    "Medium": row[6],
-                    "Campaign": row[7],
-                    "Content": row[8],
-                    "Term": row[9],
-                    "Дата создания": row[10],
-                    "Мероприятие 3": row[11],
-                    "Дата мероприятия": row[12],
-                })
+            if row[10]:
+                if '-' not in row[10]:
+                    row[10] = None
+            if row[12]:
+                if '.' not in row[12]:
+                    row[12] = None
+            data.append({
+                "ID сделки": row[0],
+                "Название сделки": row[1],
+                "Код статуса": row[2],
+                "Статус": row[3],
+                "Контакт номер": row[4],
+                "Source": row[5],
+                "Medium": row[6],
+                "Campaign": row[7],
+                "Content": row[8],
+                "Term": row[9],
+                "Дата создания": row[10],
+                "Мероприятие 3": row[11],
+                "Дата мероприятия": row[12],
+            })
 
-                if i >= 1000 and i % 1000 == 0:
-                    ins = day_open_doors.insert().values(data)
-                    conn.execute(ins)
-                    data = []
+            if i >= 1000 and i % 1000 == 0:
+                print(i)
+                ins = day_open_doors.insert().values(data)
+                conn.execute(ins)
+                data = []
         i += 1
     if len(data) != 0:
         ins = day_open_doors.insert().values(data)
@@ -387,29 +394,29 @@ def lm_migration(table):
             for j in range(len(row)):
                 if not row[j]:
                     row[j] = None
-                data.append({
-                    "ID сделки": row[0],
-                    "Название сделки": row[1],
-                    "Код статуса": row[2],
-                    "Статус": row[3],
-                    "Телефон контакта": row[4],
-                    "Контакт номер": row[5],
-                    "Source": row[6],
-                    "Medium": row[7],
-                    "Campaign": row[8],
-                    "Content": row[9],
-                    "Term": row[10],
-                    "Дата создания": row[11],
-                    "Причина отказа": row[12],
-                    "Направление": row[13],
-                    "Тип контекст РК": row[14],
-                    "Тип FB": row[15],
-                })
+            data.append({
+                "ID сделки": row[0],
+                "Название сделки": row[1],
+                "Код статуса": row[2],
+                "Статус": row[3],
+                "Телефон контакта": row[4],
+                "Контакт номер": row[5],
+                "Source": row[6],
+                "Medium": row[7],
+                "Campaign": row[8],
+                "Content": row[9],
+                "Term": row[10],
+                "Дата создания": row[11],
+                "Причина отказа": row[12],
+                "Направление": row[13],
+                "Тип контекст РК": row[14],
+                "Тип FB": row[15],
+            })
 
-            if i >= 1000 and i % 1000 == 0:
-                ins = lm.insert().values(data)
-                conn.execute(ins)
-                data = []
+        if i >= 1000 and i % 1000 == 0:
+            ins = lm.insert().values(data)
+            conn.execute(ins)
+            data = []
         i += 1
     if len(data) != 0:
         ins = lm.insert().values(data)
@@ -720,7 +727,7 @@ def revenue_remote_learning_migration(table):
     metadata = MetaData()
 
     revenue_remote_learning = Table('revenue_remote_learning', metadata,
-                                        Column('Date', Date()),
+                                    Column('Date', Date()),
                                     Column('Location', String()),
                                     Column('Administrator', String()),
                                     Column('Level1_acc', String()),
@@ -797,12 +804,12 @@ def expenses_fact_cards_migration(table):
             for j in range(len(row)):
                 if not row[j]:
                     row[j] = None
-                if row[0] is not None:
-                    date_ = str(row[0]).replace('.', '-')
-                    try:
-                        row[0] = datetime.datetime.strptime(date_.split(' ')[0], '%d-%m-%Y')
-                    except ValueError:
-                        row[0] = datetime.datetime.strptime(date_.split(' ')[0], '%Y-%m-%d')
+            if row[0] is not None:
+                date_ = str(row[0]).replace('.', '-')
+                try:
+                    row[0] = datetime.datetime.strptime(date_.split(' ')[0], '%d-%m-%Y')
+                except ValueError:
+                    row[0] = datetime.datetime.strptime(date_.split(' ')[0], '%Y-%m-%d')
 
             data.append({
                 "Date": row[0],
